@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoCars Estonia | Futuristic Sports Cars</title>
+    <meta name="description" content="Buy premium futuristic sports cars in Tallinn, Estonia. Highly customizable.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>EXO<span>CARS</span></h1>
+            <p class="location"><i class="fa-solid fa-location-dot"></i> Tallinn, Estonia</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#catalog">Catalog</a></li>
+                <li class="cart-container">
+                    <a href="#cart" id="cart-btn"><i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span></a>
+                    <div class="cart-dropdown" id="cart-dropdown">
+                        <h3>Your Cart <i class="fa-solid fa-cart-shopping"></i></h3>
+                        <div class="cart-items" id="cart-items">
+                            <p class="empty-cart">Cart is empty</p>
+                        </div>
+                        <div class="cart-total">
+                            <span>Total:</span>
+                            <span id="cart-total-price">€0</span>
+                        </div>
+                        <button class="checkout-btn" id="checkout-btn">Checkout</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>The Future of Driving.</h2>
+            <p>Experience unparalleled speed and hyper-modern aesthetics. Customize your dream machine today.</p>
+            <a href="#catalog" class="cta-btn">Explore Collection</a>
+        </div>
+    </section>
+
+    <section id="catalog" class="catalog">
+        <div class="section-title">
+            <h2>Hyper-Performance <span>Collection</span></h2>
+        </div>
+        <div class="car-grid" id="car-grid">
+            <!-- Cars rendered via JS -->
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout-section" class="checkout-section" style="display: none;">
+        <div class="section-title">
+            <h2>Secure <span>Checkout</span></h2>
+        </div>
+        <button class="back-btn" id="back-to-shop-btn"><i class="fa-solid fa-arrow-left"></i> Back to Shop</button>
+
+        <div class="checkout-layout">
+            <div class="checkout-form-container glass-panel">
+                <h3>Delivery & Payment Details</h3>
+                <form id="checkout-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" required placeholder="Elon">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" required placeholder="Musk">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" required placeholder="elon@future.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Address</label>
+                        <input type="text" required placeholder="Space Port 1, Tallinn, Estonia">
+                    </div>
+
+                    <h3 style="margin-top: 2rem;">Secure Payment</h3>
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" required placeholder="0000 0000 0000 0000" pattern="\d{16}" title="16 digits required">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry (MM/YY)</label>
+                            <input type="text" required placeholder="12/28">
+                        </div>
+                        <div class="form-group">
+                            <label>CVC</label>
+                            <input type="text" required placeholder="123" pattern="\d{3}">
+                        </div>
+                    </div>
+                    <button type="submit" class="cta-btn full-width" id="confirm-order-btn">Confirm Purchase</button>
+                </form>
+            </div>
+
+            <div class="checkout-summary glass-panel">
+                <h3>Order Summary</h3>
+                <div class="checkout-summary-items" id="checkout-summary-items">
+                    <!-- Items injected via JS -->
+                </div>
+                <div class="checkout-summary-total">
+                    <span>Total due today:</span>
+                    <h2 id="checkout-summary-price">€0</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content glass-panel" style="text-align: center; max-width: 500px;">
+            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h2 style="margin-bottom: 1rem;">Order Confirmed!</h2>
+            <p style="color: #ccc; margin-bottom: 2rem;">Your futuristic vehicles are now being prepared for delivery to your location in Tallinn, Estonia. You will receive an email confirmation shortly.</p>
+            <button class="cta-btn" id="continue-shopping-btn" style="width: 100%;">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Customizer Modal -->
+    <div id="customizer-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <div class="modal-layout">
+                <div class="modal-image-col">
+                    <h2 id="modal-car-name">Car Name</h2>
+                    <div class="view-toggle">
+                        <button id="view-exterior-btn" class="view-btn active">Exterior</button>
+                        <button id="view-interior-btn" class="view-btn">Interior</button>
+                    </div>
+                    <div class="car-preview" id="car-preview-container">
+                        <img id="modal-car-img" src="" alt="Car Preview" style="transition: filter 0.5s ease;">
+                        <div class="led-glow" id="led-glow-effect"></div>
+                        <div class="upgrade-badges">
+                            <span class="badge" id="badge-interior">Premium Leather</span>
+                            <span class="badge" id="badge-rims">20" Aero Chrome</span>
+                        </div>
+                    </div>
+                    <p class="modal-price" id="modal-base-price">Base Price: €0</p>
+                    <p class="modal-total-price" id="modal-total-price">Total Price: €0</p>
+                </div>
+                <div class="modal-options-col">
+                    <h3>Customize Your Ride</h3>
+                    
+                    <div class="config-group">
+                        <label>Exterior Color <span class="price-add">(+€5,000)</span></label>
+                        <div class="color-options" id="color-options">
+                            <div class="color-btn active" data-color="default" style="background: #111;"></div>
+                            <div class="color-btn" data-color="wine-red" style="background: #722F37;"></div>
+                            <div class="color-btn" data-color="dark-purple" style="background: #301934;"></div>
+                            <div class="color-btn" data-color="future-white" style="background: #e0e0e0;"></div>
+                            <div class="color-btn" data-color="neon-blue" style="background: #00d2ff;"></div>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Interior Material</label>
+                        <select id="interior-select">
+                            <option value="0">Premium Leather (Standard)</option>
+                            <option value="12000">Alcantara (+€12,000)</option>
+                            <option value="25000">Carbon Fiber Weave (+€25,000)</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>Rims Setup</label>
+                        <select id="rims-select">
+                            <option value="0">20" Aero Chrome (Standard)</option>
+                            <option value="8000">21" Forged Carbon (+€8,000)</option>
+                            <option value="15000">22" Diamond Cut (+€15,000)</option>
+                        </select>
+                    </div>
+
+                    <div class="config-group">
+                        <label>LED Underglow</label>
+                        <select id="led-select">
+                            <option value="0">None</option>
+                            <option value="2500" data-color="rgba(0, 210, 255, 0.5)">Cyan Wave (+€2,500)</option>
+                            <option value="2500" data-color="rgba(114, 47, 55, 0.5)">Nebula Red (+€2,500)</option>
+                            <option value="2500" data-color="rgba(48, 25, 52, 0.5)">Void Purple (+€2,500)</option>
+                        </select>
+                    </div>
+
+                    <button class="add-custom-to-cart cta-btn" id="add-custom-btn">Save Build & Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">EXO<span>CARS</span></div>
+            <p><i class="fa-solid fa-location-dot"></i> Tallinn, Estonia | EU Headquarters</p>
+            <p>Premium Futuristic Sports Cars for the Modern Elite.</p>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 ExoCars Estonia. All rights reserved.
+        </div>
+    </footer>
+    <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+        document.getElementById('car-grid').innerHTML += '<div style="background:red;color:white;padding:20px;font-size:20px;">JS ERROR: ' + message + ' at line ' + lineno + '</div>';
+    };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
